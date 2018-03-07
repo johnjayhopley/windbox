@@ -64,8 +64,8 @@ export default class WindBox {
    * @returns void
    */ 
   closeAll() {
-    let contentAreas = document.querySelectorAll('.WindBox-content');
-    let headers = document.querySelectorAll('.WindBox-header');
+    let contentAreas = document.querySelectorAll('.windbox-content');
+    let headers = document.querySelectorAll('.windbox-header');
 
     if(contentAreas !== null) {
       [].forEach.call(contentAreas, (contentArea) => {
