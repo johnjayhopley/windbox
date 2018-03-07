@@ -1,29 +1,30 @@
-# README #
+# WindBox
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## example
 
-### What is this repository for? ###
+```js
+new WindBox('.windbox')
+```
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+```html
+<div class="windbox">
+  <div class="windbox__item">
+      <button type="button" class="windbox__item-head" >Item 1</button>
+      <div class="windbox__item-content">
+          Item-1 summary
+      </div>
+  </div>
+  <div class="windbox__item">
+      <button type="button" class="windbox__item-head" >Item 1</button>
+      <div class="windbox__item-content">
+          Item-1 summary
+      </div>
+  </div>
+  <div class="windbox__item">
+      <button type="button" class="windbox__item-head" >Item 1</button>
+      <div class="windbox__item-content">
+          Item-1 summary
+      </div>
+  </div>
+</div> 
+```
