@@ -129,7 +129,7 @@ export default class WindBox {
         );
 
         this.setState(
-          event,
+          event.currentTarget,
           target,
           (target.style.display === 'block') ? true : false
         );
