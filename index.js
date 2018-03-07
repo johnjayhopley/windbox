@@ -34,8 +34,8 @@ export default class WindBox {
       let head = value.querySelector('button');
       let id = 'item-'+(index+1);
 
-      head.classList.add('WindBox-header');
-      content.classList.add('WindBox-content');
+      head.classList.add('windbox-header');
+      content.classList.add('windbox-content');
 
       WindBox.attrs(head, {
         'target': id,
