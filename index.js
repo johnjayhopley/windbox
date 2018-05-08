@@ -12,7 +12,7 @@ export default class WindBox {
    * @param {Boolean} customTransitions
    * @returns void
    */
-  constructor(selector = null, customTransitions) {
+  constructor(selector = null, customTransitions = false) {
     if(selector === null) {
       throw 'WindBox: no selector';
     }
