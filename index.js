@@ -9,14 +9,19 @@ export default class WindBox {
    * WindBox#constructor() - instantiates module and
    * @constructor
    * @param {String} selector
+   * @param {Boolean} customTransitions
    * @returns void
    */
-  constructor(selector = null) {
+  constructor(selector = null, customTransitions = false) {
     if(selector === null) {
       throw 'WindBox: no selector';
-    } 
+    }
+    if(customTransitions && typeof customTransitions !== 'boolean'){
+      throw 'WindBox: customTransitions must be a boolean.';
+    }
 
     this.container = document.querySelector(selector);
+    this.customTransitions = customTransitions;
     this.items = this.container.children;
     this.headers = [];
     this.indexItems();
@@ -69,7 +74,12 @@ export default class WindBox {
 
     if(contentAreas !== null) {
       [].forEach.call(contentAreas, (contentArea) => {
-        contentArea.style.display = 'none';
+        if(this.customTransitions){
+          contentArea.style.display = 'block';
+          contentArea.classList.remove('open');
+        }else{
+          contentArea.style.display = 'none';
+        }
         WindBox.attrs(contentArea, {
           'aria-hidden': true,
           'disabled': false,
@@ -113,7 +123,9 @@ export default class WindBox {
       'aria-expanded': (open) ? false : true,
     });
 
-    content.style.display = (open) ? 'none' : 'block';
+    if(!this.customTransitions){
+      content.style.display = (open) ? 'none' : 'block';
+    }
   }
 
   /**
@@ -131,6 +143,8 @@ export default class WindBox {
         this.setState(
           event.currentTarget,
           target,
+          this.customTransitions ?
+          (target.classList.contains('open')) ? true : false :
           (target.style.display === 'block') ? true : false
         );
       })
