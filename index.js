@@ -1,8 +1,9 @@
 /**
  * WindBox
- * @version 1.0
+ * @version 2.0.1
  * @author John Hopley <jhopley@readingroom.com>
  */
+
 export default class WindBox {
 
   /**
@@ -20,11 +21,24 @@ export default class WindBox {
       throw 'WindBox: customTransitions must be a boolean.';
     }
 
-    this.container = document.querySelector(selector);
+    this.selector = selector;
+    this.elements = document.querySelectorAll(selector);
     this.customTransitions = customTransitions;
-    this.items = this.container.children;
-    this.headers = [];
-    this.indexItems();
+    this.index = 0;
+
+    this.elements.forEach((element) => {
+      this.index = this.index + 1;
+      this.container = element;
+      this.items = this.container.children;
+
+      WindBox.attrs(this.container, {
+        id: WindBox.uuid(),
+      });
+
+      this.headers = [];
+
+      this.indexItems();
+    });
   }
 
   /**
@@ -37,7 +51,8 @@ export default class WindBox {
     [].forEach.call(this.items, (value, index) => {
       let content = value.querySelector('div');
       let head = value.querySelector('button');
-      let id = 'item-'+(index+1);
+      let selectorName = this.selector.replace('.', '');
+      let id = `${selectorName}-item-${(this.index)}-${(index+1)}`;
 
       head.classList.add('windbox-header');
       content.classList.add('windbox-content');
@@ -60,6 +75,7 @@ export default class WindBox {
     }); 
 
     this.dispatchEvents(); 
+    this.closeAll();
   }
 
   /**
@@ -68,16 +84,24 @@ export default class WindBox {
    * @protected
    * @returns void
    */ 
-  closeAll() {
-    let contentAreas = document.querySelectorAll('.windbox-content');
-    let headers = document.querySelectorAll('.windbox-header');
+  closeAll(target = null) {
+    let content = '.windbox-content';
+    let headers = '.windbox-header';
 
+    if (target != null) {
+      content = `#${target.parentNode.parentNode.id} .windbox-content`;
+      headers = `#${target.parentNode.parentNode.id} .windbox-header`;
+    }
+
+    let contentAreas = document.querySelectorAll(content);
+    let headersAreas = document.querySelectorAll(headers);
+    
     if(contentAreas !== null) {
-      [].forEach.call(contentAreas, (contentArea) => {
-        if(this.customTransitions){
+      [].forEach.call(contentAreas, (contentArea, index) => {
+        if (this.customTransitions){
           contentArea.style.display = 'block';
           contentArea.classList.remove('open');
-        }else{
+        } else {
           contentArea.style.display = 'none';
         }
         WindBox.attrs(contentArea, {
@@ -87,8 +111,8 @@ export default class WindBox {
       })
     }
 
-    if(headers !== null) {
-      [].forEach.call(headers, (header) => {
+    if(headersAreas !== null) {
+      [].forEach.call(headersAreas, (header) => {
         WindBox.attrs(header, {
           'aria-expanded': false,
         });
@@ -106,7 +130,7 @@ export default class WindBox {
    * @returns void
    */ 
   setState(head, content, open) {
-    this.closeAll();
+    this.closeAll(head);
 
     if(open) {
       content.classList.remove('open');
@@ -163,5 +187,18 @@ export default class WindBox {
         element.setAttribute(prop, attrs[prop]);
       });       
     }
+  }
+
+  /**
+   * WindBox#uuid() 
+   * creates a unique ID
+   * @static
+   * @returns string
+   */ 
+  static uuid() {
+    return `windbox-${(
+      Math.random().toString(36).substring(2) + 
+      (new Date()).getTime().toString(36)
+    )}`;
   }
 }
