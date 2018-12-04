@@ -1,0 +1,19 @@
+{
+  "name": "windbox",
+  "version": "1.0.1",
+  "description": "ReadingRoom windbox module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://john_hopley@bitbucket.org/rippleffect/windbox.git"
+  },
+  "keywords": [
+    "windbox accordian expand"
+  ],
+  "author": "John Hopley",
+  "license": "ISC",
+  "homepage": "https://john_hopley@bitbucket.org/rippleffect/windbox.git#readme"
+}
